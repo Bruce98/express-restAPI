@@ -17,6 +17,12 @@ var port = process.env.PORT || 8080;
 // 任何路由的每次request都执行
 router.use(function(req, res, next) {
     // 打印
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  //res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  //res.header("X-Powered-By",' 3.2.1')
+     res.header("Content-Type", "application/json;charset=utf-8");
+
     console.log('Something is happening.');
     next(); // 在这里会将request交给下一个中间件，如果这个中间件后面没有其他中间件，请求会交给匹配的路由作处理
 });
@@ -42,10 +48,14 @@ router.route('/users/:user_id').put(Users.putUsersid);
 router.route('/users/:user_id').delete(Users.deleteUsersid);
 
 //客户维护
+router.route('/Customer').get(Customer.getCustomer);
 
 router.route('/Customer').post(Customer.postCustomer);
 
+router.route('/Customer/:cus_id').get(Customer.getCustomerid);
 
+router.route('/Customer/:cus_id').put(Customer.putCustomerid);
+router.route('/Customer/:cus_id').delete(Customer.deleteCustomerid);
 
 //注册路由
 //所有路由加上'/api'
