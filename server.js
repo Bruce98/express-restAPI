@@ -52,7 +52,7 @@ router.route('/Customer').get(Customer.getCustomer);
 
 router.route('/Customer').post(Customer.postCustomer);
 
-router.route('/Customer/:cus_id').get(Customer.getCustomerid);
+router.route('/Customer/:cus_id/').get(Customer.getCustomerid);
 
 router.route('/Customer/:cus_id').put(Customer.putCustomerid);
 router.route('/Customer/:cus_id').delete(Customer.deleteCustomerid);

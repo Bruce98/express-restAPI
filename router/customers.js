@@ -2,11 +2,41 @@ var Customer = require('../model/Customer')
 
 
 exports.getCustomer = function(req, res) {
-        Customer.find(function(err, data) {
-            if (err)
+        let search = req.query.search
+        // let
+
+        // Customer.customers.find()
+        if (typeof search  =='undefind' ){
+             search = ""
+        }
+                      
+        console.log("分页")
+        // console.log(req.query)
+        let page_size = req.query.page_size
+        let size = req.query.size
+        page_size = Number(page_size)
+        size= Number(size)
+        if (page_size < 1){
+            page_size = 0;
+        }
+        else{
+            page_size = page_size - 1
+        }
+        Customer.find(
+            {$or: [
+                {ElectricName: {$regex: search}},
+                {CustomerName: {$regex: search}},
+                {address: {$regex: search}},
+                {Telephone: {$regex: search}}]
+            },
+            (err, data) => {
+            if (err) {
                 res.send(err);
-            res.json(data);
-        });
+            }
+            else{
+                res.json(data);
+            }
+        }).limit(size).skip(size * page_size)
     }
 
 
