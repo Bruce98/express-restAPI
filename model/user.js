@@ -4,7 +4,7 @@ var mongoose = require('./db.js')
 var Schema   = mongoose.Schema;
 
 var BearSchema = new Schema({
-    name: String,
+    username: String,
     password: String
 
 });

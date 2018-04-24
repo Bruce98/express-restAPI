@@ -1,18 +1,24 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var router = express.Router()
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const router = express.Router()
+const morgan = require('morgan'); // 命令行log显示
+const passport = require('passport');// 用户认证模块passport
+const Strategy = require('passport-http-bearer').Strategy;// token验证模块
+const config = require('./config/config')
 
-var Users = require('./router/user')
-var Customer = require('./router/customers')
+//路由模块
+const Users = require('./router/user')
+const Customer = require('./router/customers')
 
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use(bodyParser.json())
 
+var port = process.env.PORT || 8344;
 
-
-var port = process.env.PORT || 8080;
+app.use(passport.initialize());// 初始化passport模块
+app.use(morgan('dev'));// 命令行中显示程序运行日志,便于bug调试
 
 // 任何路由的每次request都执行
 router.use(function(req, res, next) {
@@ -31,6 +37,11 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
+
+//登陆
+router.route('/login').post(Users.postlogin)
+
+
 
 //用户名
 router.route('/users').get(Users.getUsers);

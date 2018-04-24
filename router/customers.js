@@ -3,15 +3,11 @@ var Customer = require('../model/Customer')
 
 exports.getCustomer = function(req, res) {
         let search = req.query.search
-        // let
-
-        // Customer.customers.find()
         if (typeof search  =='undefind' ){
              search = ""
         }
-                      
-        console.log("分页")
-        // console.log(req.query)
+        //console.log("分页")
+         console.log(search)
         let page_size = req.query.page_size
         let size = req.query.size
         page_size = Number(page_size)

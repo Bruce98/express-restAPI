@@ -1,5 +1,26 @@
-
 var Users = require('../model/user')
+
+
+//登陆
+exports.postlogin = function(req, res) {
+
+    let username = req.body.username
+    if (username){
+        Users.findOne({username: username}, function(err, data) {
+            if (err || !data)
+            {
+                console.log(err)
+            }
+            if (data.password == req.body.password) {
+                console.log('login')
+                res.json(data)
+            }
+        });
+
+    }
+    
+}
+
 
 exports.getUsers = function(req, res) {
         Users.find(function(err, users) {
@@ -8,6 +29,7 @@ exports.getUsers = function(req, res) {
             res.json(users);
         });
     }
+    
 exports.postUsers = function(req,res){
     var user = new Users()
     user.name = req.body.name;
